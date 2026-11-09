@@ -38,7 +38,3 @@ void loginSystem(){
     exit(1);
 }
 
-int main(){
-    loginSystem();
-    return 0;
-}
