@@ -1,40 +1,38 @@
 #include<stdio.h>
 #include<string.h>
 #include<stdlib.h>
+#include "clinic.h"
 
-#define PASSWORD "admin123"
-
-void clearInputBuffer(){
+void clearInputBuffer(void) {
     int c;
-    while(c!='\n' && c!=EOF){
-        c = getchar();
+    while ((c = getchar()) != '\n' && c != EOF) {
     }
 }
 
-void loginSystem(){
+int loginSystem(void){
     int attempts = 3;
-    char input[50];
+    char username[50];
+    char password[50];
 
     printf("\n*********************************************************************************\n");
     printf("\n                             SYSTEM AUTHENTICATION                               \n");
     printf("\n*********************************************************************************\n");
 
     while(attempts > 0){
+        printf("\nEnter Authentication username: ");
+        scanf("%49s",username);
         printf("\nEnter Authentication Password: ");
-        scanf("%49s",input);
+        scanf("%49s",password);
 
-        clearInputBuffer();
-
-        if(strcmp(input,PASSWORD) == 0){
-            printf("Password is correct, Access Granted\n");
-            return ;
+        if(strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0){
+            printf("Login successful, Access Granted\n");
+            return 0;
         }else{
             attempts--;
-            printf("Invalid password, Access denied, no of attempts remaining is %d\n",attempts);
+            printf("Invalid credentials, Access denied, no of attempts remaining is %d\n",attempts);
         }
     }
 
     printf("\n[Security Alert] Too many unsuccessful attempts, program is terminated\n\n");
     exit(1);
 }
-
