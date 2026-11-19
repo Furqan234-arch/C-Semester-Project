@@ -19,6 +19,6 @@ int loginSystem(void);
 void addAppointment(void);
 void searchAppointmentByID(void);
 void updatePatientRecord(void);
-void deletePatientRecord(void);
+void deletePatientrecord(void);
 void clearInputBuffer(void);
 #endif
