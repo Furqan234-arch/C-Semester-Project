@@ -60,9 +60,37 @@ void searchAppointmentByID(void) {
 
     fclose(file);
 }
+void deletePatientrecord(){
+FILE *file=fopen(FILENAME,"r");
+FILE *temp=fopen("temp.txt","w");
+if (file==NULL || temp==NULL){
+    printf("Error opening file\n");
+    return;
+}
+ int found=0;
+ int deleteID;
+ Appointment a;
+ while(fscanf(file, "%d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
+              &a.appointment_id, a.patient_name, &a.patient_age,
+              a.doctor_name, a.appointment_date, a.status) == 1){
+                if(deleteID!=a.appointment_id){
+                    fprintf(temp,"%d,%s,%d,%s,%s,%s\n",a.appointment_id, a.patient_name, a.patient_age, 
+                a.doctor_name, a.appointment_date, a.status);
+    } else {
+        found = 1;
+    }
+                }
+remove(FILENAME);
+rename("Data//temp.txt",FILENAME);
+
+if (found==1)
+printf("Patient Record deleted successfully!\n");
+else
+printf("ID not found\n"); 
+            }
+
 
 int main() {
-    if (loginSystem() == 0) searchAppointmentByID();
-    printf("dhafhad");
+    if (loginSystem() == 0) addAppointment();
     return 0;
 }
