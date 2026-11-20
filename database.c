@@ -60,9 +60,3 @@ void searchAppointmentByID(void) {
 
     fclose(file);
 }
-
-int main() {
-    if (loginSystem() == 0) searchAppointmentByID();
-
-    return 0;
-}
