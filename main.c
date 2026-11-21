@@ -4,7 +4,7 @@ int main(void) {
     int choice = 0;
 
     loginSystem();//login function call for admin (no input or output)
-    clearInputBuffer();//clear left over newline from scanf in login system (defined in utils.c)
+    
 
     //admin have to select from five choices
     //I used dowhile loop so admin can make atlest one choice even if it invalid (display default msg)
@@ -15,10 +15,10 @@ printf("\n=================================\n");
         printf("=================================\n");
         printf("1. Add Appointment\n");
         printf("2. Search Appointment by ID\n");
-        printf("3.Update Patient Record\n");
-        printf("4. Delete Patient  Recrd\n");
-        printf("5.Exit\n");
-        printf("Enter your choice:");
+        printf("3. Update Appointment Record\n");
+        printf("4. Delete Appointment Record\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
 
         if (scanf("%d",   &choice) !=1) {
             choice = 0;
@@ -32,10 +32,10 @@ printf("\n=================================\n");
             searchAppointmentByID();
                 break;
             case 3:
-            updatePatientRecord();
+            updateAppointmentRecord();
                 break;
             case 4:
-                 deletePatientRecord();
+                 deleteAppointmentRecord();
                 break;
             case 5:
                 printf("\nExiting system.\n");
