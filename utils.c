@@ -23,6 +23,7 @@ int loginSystem(void){
         scanf("%49s",username);
         printf("\nEnter Authentication Password: ");
         scanf("%49s",password);
+        printf("\n");
 
         if(strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0){
             printf("Login successful, Access Granted\n");
@@ -34,5 +35,5 @@ int loginSystem(void){
     }
 
     printf("\n[Security Alert] Too many unsuccessful attempts, program is terminated\n\n");
-    return 0;
+    return 1;
 }

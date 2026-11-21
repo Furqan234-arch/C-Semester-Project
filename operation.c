@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include "clinic.h"
 
-void updatePatientRecord(void)
+void updateAppointmentRecord(void)
 {
     FILE *fp, *temp;
     Appointment a;
@@ -44,11 +44,11 @@ if(temp == NULL){
             scanf(" %49[^\n]", a.doctor_name);
             clearInputBuffer();
               printf("Enter new date (DD-MM-YYYY): ");
-            scanf("%11s", a.appointment_date);
+            scanf(" %11s", a.appointment_date);
             clearInputBuffer();
 
             printf("Enter new status (Pending/Confirmed/Completed): ");
-            scanf("%14s", a.status);
+            scanf(" %14s", a.status);
             clearInputBuffer();}
         // Write appointment (updated or unchanged)
         fprintf(temp, "%d,%s,%d,%s,%s,%s\n",

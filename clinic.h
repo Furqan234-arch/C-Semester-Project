@@ -15,10 +15,12 @@ typedef struct {
     char appointment_date[12]; // Format: DD-MM-YYYY
     char status[15];           // Pending, Confirmed, Completed
 } Appointment;
-int loginSystem(void);
-void addAppointment(void);
-void searchAppointmentByID(void);
-void updatePatientRecord(void);
-void deletePatientRecord(void);
+
 void clearInputBuffer(void);
+int loginSystem(void);
+void addAppointment();
+void searchAppointmentByID();
+void updateAppointmentRecord();
+void deleteAppointmentRecord();
+
 #endif

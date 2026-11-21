@@ -11,7 +11,7 @@ void addAppointment(void) {
     
     printf("Enter Appointment ID: ");
     scanf(" %d",&a.appointment_id);
-    
+
     printf("\nEnter Patient Name: ");
     scanf(" %49[^\n]", a.patient_name);
   
@@ -27,7 +27,7 @@ void addAppointment(void) {
     printf("\nEnter Patient status(Pending/Confirmed): ");
     scanf(" %14s", a.status);
     
-
+    clearInputBuffer(); // Clear the input buffer after reading inputs
     fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
     printf("\nAppointment added successfully!\n");
     fclose(file);
@@ -41,14 +41,15 @@ void searchAppointmentByID(void) {
     int id;
     printf("Enter Appointment ID to search: ");
     scanf("%d", &id);
-
+    clearInputBuffer(); // Clear the input buffer after reading inputs
+    printf("\n");
     Appointment a;
     int found = 0;
     while (fscanf(file, "%d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
               &a.appointment_id, a.patient_name, &a.patient_age,
               a.doctor_name, a.appointment_date, a.status) == 6) {
     if (a.appointment_id == id) {
-       printf("Appointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n",
+       printf("Appointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n\n",
          a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
      
        found = 1;
@@ -60,4 +61,5 @@ void searchAppointmentByID(void) {
     }
 
     fclose(file);
-}
+    
+} 
