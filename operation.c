@@ -51,13 +51,16 @@ if(temp == NULL){
             scanf(" %14s", a.status);
             clearInputBuffer();}
         // Write appointment (updated or unchanged)
-        fprintf(temp, "%d,%s,%d,%s,%s,%s\n",
-                a.appointment_id,
-                a.patient_name,
-                a.patient_age,
-                a.doctor_name,
-                a.appointment_date,
-                a.status);
+        fprintf(
+            temp,
+            "%d,%s,%d,%s,%s,%s\n",
+            a.appointment_id,
+            a.patient_name,
+            a.patient_age,
+            a.doctor_name,
+            a.appointment_date,
+            a.status
+        );
     }
 
     fclose(fp);
@@ -72,3 +75,58 @@ if (rename("Data//temp.txt", FILENAME) == 0) printf("\nAppointment updated succe
 remove("Data//temp.txt");
 printf("\nAppointment ID not found!\n");
 }}
+
+
+void deleteAppointmentRecord(void)
+{
+    FILE *file = fopen(FILENAME, "r");
+    FILE *temp;
+
+    if (file == NULL) {
+        printf("Error opening file\n");
+        return;
+    }
+
+    temp = fopen("Data//temp.txt", "w");
+    if (temp == NULL) {
+        printf("Error opening temporary file\n");
+        fclose(file);
+        return;
+    }
+
+    int found = 0;
+    int deleteID;
+    Appointment a;
+
+    printf("Enter Appointment ID to delete: ");
+    scanf(" %d", &deleteID);
+
+    while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
+                  &a.appointment_id, a.patient_name, &a.patient_age,
+                  a.doctor_name, a.appointment_date, a.status) == 6) {
+        if (a.appointment_id == deleteID) {
+            found = 1;
+            continue;
+        }
+
+        fprintf(temp, "%d,%s,%d,%s,%s,%s\n",
+                a.appointment_id, a.patient_name, a.patient_age,
+                a.doctor_name, a.appointment_date, a.status);
+    }
+
+    fclose(file);
+    fclose(temp);
+
+    if (found == 1) {
+        remove(FILENAME);
+
+        if (rename("Data//temp.txt", FILENAME) == 0) {
+            printf("Appointment Record deleted successfully!\n");
+        } else {
+            printf("Error renaming file.\n");
+        }
+    } else {
+        remove("Data//temp.txt");
+        printf("ID not found\n");
+    }
+}
