@@ -8,6 +8,7 @@ void addAppointment(void) {
     if(file == NULL) {printf("File not Found!"); exit(1);}
 
     Appointment a;
+    
     printf("Enter Appointment ID: ");
     scanf(" %d",&a.appointment_id);
     
@@ -28,7 +29,7 @@ void addAppointment(void) {
     
 
     fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
-
+    printf("\nAppointment added successfully!\n");
     fclose(file);
   
 }
