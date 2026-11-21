@@ -34,5 +34,5 @@ int loginSystem(void){
     }
 
     printf("\n[Security Alert] Too many unsuccessful attempts, program is terminated\n\n");
-    return 1;
+    return 0;
 }

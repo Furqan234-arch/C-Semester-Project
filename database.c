@@ -11,7 +11,7 @@ void addAppointment(void) {
     
     printf("Enter Appointment ID: ");
     scanf(" %d",&a.appointment_id);
-
+    
     printf("\nEnter Patient Name: ");
     scanf(" %49[^\n]", a.patient_name);
   
@@ -60,4 +60,10 @@ void searchAppointmentByID(void) {
     }
 
     fclose(file);
-} 
+}
+
+int main() {
+    if (loginSystem() == 0) searchAppointmentByID();
+
+    return 0;
+}
