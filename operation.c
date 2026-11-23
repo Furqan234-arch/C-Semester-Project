@@ -3,7 +3,7 @@
 #include<stdlib.h>
 #include "clinic.h"
 
-void updateAppointmentRecord(void)
+void updateAppointment(void)
 {
     FILE *fp, *temp;
     Appointment a;
@@ -77,21 +77,21 @@ printf("\nAppointment ID not found!\n");
 }}
 
 
-void deleteAppointmentRecord(void)
+void deleteAppointment(void)
 {
     FILE *file = fopen(FILENAME, "r");
     FILE *temp;
 
     if (file == NULL) {
         printf("Error opening file\n");
-        return;
+        exit(1);
     }
 
     temp = fopen("Data//temp.txt", "w");
     if (temp == NULL) {
         printf("Error opening temporary file\n");
         fclose(file);
-        return;
+        exit(1);
     }
 
     int found = 0;
@@ -102,31 +102,33 @@ void deleteAppointmentRecord(void)
     scanf(" %d", &deleteID);
 
     while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
-                  &a.appointment_id, a.patient_name, &a.patient_age,
-                  a.doctor_name, a.appointment_date, a.status) == 6) {
-        if (a.appointment_id == deleteID) {
-            found = 1;
-            continue;
-        }
+        &a.appointment_id, a.patient_name, &a.patient_age,a.doctor_name, a.appointment_date, a.status) == 6) {
+      
+            if (a.appointment_id == deleteID) {
+                found = 1;
+                printf("\nAppointment to be deleted:\n");    
+                printf("\nAppointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n",
+                a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
+                continue;
+            }
 
         fprintf(temp, "%d,%s,%d,%s,%s,%s\n",
-                a.appointment_id, a.patient_name, a.patient_age,
-                a.doctor_name, a.appointment_date, a.status);
+        a.appointment_id, a.patient_name, a.patient_age,a.doctor_name, a.appointment_date, a.status);
     }
 
     fclose(file);
     fclose(temp);
 
-    if (found == 1) {
-        remove(FILENAME);
+if (found == 0) {
+    remove("Data//temp.txt");
+    printf("ID not found\n");
+    exit(1);
+}
+remove(FILENAME);
 
-        if (rename("Data//temp.txt", FILENAME) == 0) {
-            printf("Appointment Record deleted successfully!\n");
-        } else {
-            printf("Error renaming file.\n");
-        }
-    } else {
-        remove("Data//temp.txt");
-        printf("ID not found\n");
-    }
+if (rename("Data//temp.txt", FILENAME) != 0) {
+    printf("Error renaming file.\n");
+    exit(1);
+}
+printf("Appointment deleted successfully!\n");
 }

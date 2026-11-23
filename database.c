@@ -26,6 +26,21 @@ void addAppointment(void) {
 
     printf("\nEnter Patient status(Pending/Confirmed): ");
     scanf(" %14s", a.status);
+<<<<<<< Updated upstream
+=======
+
+    FILE *file = fopen(FILENAME, "a");
+    if (file == NULL) {
+        printf("File not Found!");
+        exit(1);
+    }
+
+    fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
+    
+    printf("\nAppointment added successfully!\n");
+    printf("\nAppointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n",
+    a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
+>>>>>>> Stashed changes
     
     clearInputBuffer(); // Clear the input buffer after reading inputs
     fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
@@ -61,5 +76,40 @@ void searchAppointmentByID(void) {
     }
 
     fclose(file);
+<<<<<<< Updated upstream
     
 } 
+=======
+}
+
+void displayAllAppointments() {
+    FILE *file = fopen("Data//appointments.txt", "r");
+
+    // Exit early if the file can't be opened
+    if (file == NULL) {
+        printf("\nNo records found.\n");
+        exit(1);
+    }
+
+    Appointment a;
+    int found = 0;
+    printf("\n=================================\n");
+    printf("\nAll Appointments\n");
+    printf("\n=================================\n");
+    
+    while (fscanf(file, "%d|%49[^,]|%d|%49[^,]|%11[^,]|%14[^\n]\n",&a.appointment_id, a.patient_name, &a.patient_age,
+                a.doctor_name, a.appointment_date, a.status) == 6) {
+        
+        printf("ID: %d | Patient: %s (%d) | Doctor: %s | Date: %s | Status: %s\n",
+               a.appointment_id, a.patient_name, a.patient_age,
+               a.doctor_name, a.appointment_date, a.status);
+        found = 1;
+    }
+
+    if (!found) {
+        printf("No appointments in the file.\n");
+    }
+
+    fclose(file);
+}
+>>>>>>> Stashed changes
