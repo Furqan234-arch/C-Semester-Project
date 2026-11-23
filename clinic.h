@@ -14,7 +14,10 @@ typedef struct {
     char doctor_name[50];
     char appointment_date[12]; // Format: DD-MM-YYYY
     char status[15];           // Pending, Confirmed, Completed
+    char phone_number[15];     
+    char gmail[50];             
 } Appointment;
+
 int loginSystem(void);
 void addAppointment(void);
 void searchAppointmentByID(void);

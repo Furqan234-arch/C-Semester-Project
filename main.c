@@ -7,35 +7,37 @@ int main(void) {
     clearInputBuffer();//clear left over newline from scanf in login system (defined in utils.c)
 
     //admin have to select from five choices
-    //I used dowhile loop so admin can make atlest one choice even if it invalid (display default msg)
-    //5 to exit the loop
+    //I used dowhile loop so admin can make atleast one choice even if it invalid.
     do {
 printf("\n=================================\n");
         printf("     CLINIC APPOINTMENT SYSTEM\n");
         printf("=================================\n");
         printf("1. Add Appointment\n");
         printf("2. Search Appointment by ID\n");
-        printf("3.Update Patient Record\n");
+        printf("3. Update Patient Record\n");
         printf("4. Delete Patient  Recrd\n");
-        printf("5.Exit\n");
+        printf("5. Exit\n");
         printf("Enter your choice:");
 
+        //Check whether the admin entered a valid integer
         if (scanf("%d",   &choice) !=1) {
             choice = 0;
 }
-        clearInputBuffer();
+        clearInputBuffer();//clear any leftover input from the input buffer
+
+        //Execute the function according to the admin's choice
         switch (choice) {
             case 1:
-                  addAppointment();
+                addAppointment();
                 break;
             case 2:
-            searchAppointmentByID();
+                searchAppointmentByID();
                 break;
             case 3:
-            updatePatientRecord();
+                updatePatientRecord();
                 break;
             case 4:
-                 deletePatientRecord();
+                deletePatientRecord();
                 break;
             case 5:
                 printf("\nExiting system.\n");
@@ -43,6 +45,6 @@ printf("\n=================================\n");
             default:
                 printf("\nInvalid choice (please enter 1-5)\n");
         }
-    } while (choice != 5);
+    } while (choice != 5);//repeat menu until admin chooses 5
     return 0;
 }
