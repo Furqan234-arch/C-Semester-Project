@@ -1,7 +1,6 @@
 #ifndef CLINIC_H
 #define CLINIC_H
 
-#define maxAppointments 100
 #define FILENAME "Data//appointments.txt"
 #define USERNAME "admin"
 #define PASSWORD "admin123"

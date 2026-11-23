@@ -3,10 +3,24 @@ Clinic Management System Project
 
 Basic Information
 
-#define maxAppointments 100
+Login info:
+
 #define fileName "appointments.txt"
 #define Password "admin123"
 
+
+Functions:
+
+int loginSystem(void);
+void addAppointment(void);
+void searchAppointmentByID(void);
+void displayAllAppointments(void);
+void updateAppointment(void);
+void deleteAppointment(void);
+void clearInputBuffer(void);
+
+
+Data structure:
 
 typedef struct {
     int appointment_id;

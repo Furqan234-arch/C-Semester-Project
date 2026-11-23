@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdlib.h>
 #include "clinic.h"
 
 void clearInputBuffer(void) {
@@ -30,10 +29,10 @@ int loginSystem(void){
             return 0;
         }else{
             attempts--;
-            printf("Invalid credentials, Access denied, no of attempts remaining is %d\n",attempts);
+            printf("Invalid credentials, no. of attempts remaining is %d\n",attempts);
         }
     }
 
-    printf("\n[Security Alert] Too many unsuccessful attempts, program is terminated\n\n");
+    printf("\nToo many unsuccessful attempts\n\n");
     return 1;
 }
