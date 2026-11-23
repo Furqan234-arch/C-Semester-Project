@@ -27,14 +27,14 @@ int loginSystem(void){
         clearInputBuffer(); // Clear the input buffer after reading inputs
 
         if(strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0){
-            printf("Login successful, Access Granted\n");
+            printf("Login successful!\n");
             return 0;
         }else{
             attempts--;
-            printf("Invalid credentials, Access denied, no of attempts remaining is %d\n",attempts);
+            printf("Invalid credentials, no of attempts remaining is %d\n",attempts);
         }
     }
 
-    printf("\n[Security Alert] Too many unsuccessful attempts, program is terminated\n\n");
+    printf("\nToo many unsuccessful attempts\n\n");
     return 1;
 }
