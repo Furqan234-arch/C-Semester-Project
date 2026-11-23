@@ -26,21 +26,12 @@ void addAppointment(void) {
 
     printf("\nEnter Patient status(Pending/Confirmed): ");
     scanf(" %14s", a.status);
-<<<<<<< Updated upstream
-=======
-
-    FILE *file = fopen(FILENAME, "a");
-    if (file == NULL) {
-        printf("File not Found!");
-        exit(1);
-    }
 
     fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
     
     printf("\nAppointment added successfully!\n");
     printf("\nAppointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n",
     a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
->>>>>>> Stashed changes
     
     clearInputBuffer(); // Clear the input buffer after reading inputs
     fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
@@ -76,10 +67,6 @@ void searchAppointmentByID(void) {
     }
 
     fclose(file);
-<<<<<<< Updated upstream
-    
-} 
-=======
 }
 
 void displayAllAppointments() {
@@ -112,4 +99,3 @@ void displayAllAppointments() {
 
     fclose(file);
 }
->>>>>>> Stashed changes

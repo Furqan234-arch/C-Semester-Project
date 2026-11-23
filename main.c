@@ -1,5 +1,3 @@
-<<<<<<< Updated upstream
-=======
 #include <stdio.h>
 #include "clinic.h"
 int main(void) {
@@ -55,4 +53,3 @@ int main(void) {
     } while (choice != 6);
     return 0;
 }
->>>>>>> Stashed changes
