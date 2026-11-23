@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "clinic.h"
 
 void updateAppointment(void){
@@ -11,22 +10,22 @@ void updateAppointment(void){
     file = fopen(FILENAME, "r");
     if (file == NULL) {
         printf("Unable to open appointments file.\n");
-        exit(1);
+        return;
     }
 
-    // write changes to a temp file first, then swap it in at the end
+    // it writes changes to a temporary file and then swap it in the end
     temp = fopen("Data//temp.txt", "w");
     if (temp == NULL) {
         printf("Unable to create temporary file.\n");
         fclose(file);
-        exit(1);
+        return;
     }
 
     printf("Enter Appointment ID to update: ");
     scanf("%d", &searchID);
     clearInputBuffer();
 
-    // the numbers in the format (%49 etc.) stop us overflowing the arrays
+    // the numbers in the format %49 etc prevent overflowing the arrays
     while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
             &a.appointment_id,a.patient_name,&a.patient_age,a.doctor_name,a.appointment_date,a.status) == 6) {
 
@@ -63,13 +62,13 @@ void updateAppointment(void){
             printf("\nAppointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n ",
                 a.appointment_id, a.patient_name, a.patient_age,a.doctor_name, a.appointment_date, a.status);
         }
-        // copy every record over, changed or not
+        // copy every record over to the temp file, including the one we updated
         fprintf(temp, "%d,%s,%d,%s,%s,%s\n",
             a.appointment_id,a.patient_name,a.patient_age,a.doctor_name,a.appointment_date,a.status);
     }
     fclose(file);
     fclose(temp);
-    // no match = throw the temp file away, original stays as is
+    // no match = delete the temporary file and original stays intact
     if (!found) {
         remove("Data//temp.txt");
         printf("\nAppointment ID not found!\n");
@@ -95,14 +94,14 @@ void deleteAppointment(void)
 
     if (file == NULL) {
         printf("Error opening file\n");
-        exit(1);
+        return;
     }
 
     temp = fopen("Data//temp.txt", "w");
     if (temp == NULL) {
         printf("Error opening temporary file\n");
         fclose(file);
-        exit(1);
+        return;
     }
 
     printf("Enter Appointment ID to delete: ");
@@ -137,7 +136,7 @@ void deleteAppointment(void)
     if (!found) {
         remove("Data//temp.txt");
         printf("ID not found\n");
-        exit(1);
+        return;
     }
     // user said no, so the original file stays untouched
     if (!deleted) {
@@ -148,7 +147,7 @@ void deleteAppointment(void)
     remove(FILENAME);
     if (rename("Data//temp.txt", FILENAME) != 0) {
         printf("Error renaming file.\n");
-        exit(1);
+        return;
     }
     printf("Appointment deleted successfully!\n");
 }

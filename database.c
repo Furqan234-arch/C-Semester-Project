@@ -1,5 +1,4 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include "clinic.h"
 
 void addAppointment(void){
@@ -51,7 +50,7 @@ void addAppointment(void){
     FILE *file = fopen(FILENAME, "a");
     if (file == NULL) {
         printf("File not Found!");
-        exit(1);
+        return;
     }
     fprintf(file, "%d,%s,%d,%s,%s,%s\n",
         a.appointment_id,a.patient_name,a.patient_age,a.doctor_name,a.appointment_date,a.status);
@@ -71,7 +70,7 @@ void searchAppointmentByID(void){
 
     if (file == NULL) {
         printf("File not Found!");
-        exit(1);
+        return;
     }
     printf("Enter Appointment ID to search: ");
     scanf("%d", &id);
@@ -101,7 +100,7 @@ void displayAllAppointments(void){
 
     if (file == NULL) {
         printf("\nNo records found.\n");
-        exit(1);
+        return;
     }
     printf("\nAll Appointments:\n");
     // keeps going until a line doesn't give us all 6 fields
