@@ -1,6 +1,5 @@
 #include<stdio.h>
 #include<string.h>
-#include<stdlib.h>
 #include "clinic.h"
 
 void clearInputBuffer(void) {
@@ -24,14 +23,13 @@ int loginSystem(void){
         printf("\nEnter Authentication Password: ");
         scanf("%49s",password);
         printf("\n");
-        clearInputBuffer(); // Clear the input buffer after reading inputs
 
         if(strcmp(username, USERNAME) == 0 && strcmp(password, PASSWORD) == 0){
             printf("Login successful!\n");
             return 0;
         }else{
             attempts--;
-            printf("Invalid credentials, no of attempts remaining is %d\n",attempts);
+            printf("Invalid credentials, no. of attempts remaining is %d\n",attempts);
         }
     }
 

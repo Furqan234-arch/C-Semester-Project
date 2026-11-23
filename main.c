@@ -19,7 +19,8 @@ int main(void) {
         printf("2. Search Appointment by ID\n");
         printf("3. Update Appointment Record\n");
         printf("4. Delete Appointment Record\n");
-        printf("5. Exit\n\n");
+        printf("5. Display All Appointments\n");
+        printf("6. Exit\n\n");
 
         printf("Enter your choice: ");
         scanf("%d",   &choice);
@@ -35,17 +36,20 @@ int main(void) {
                 searchAppointmentByID();
                 break;
             case 3:
-                updateAppointmentRecord();
+                updateAppointment();
                 break;
-            case 4:
-                deleteAppointmentRecord();
+            case 4: 
+                 deleteAppointment();
                 break;
-            case 5:
-                printf("\nExiting system.\n");
+            case 5: 
+               displayAllAppointments();
+                break;
+            case 6:
+                printf("\nExiting...\n");
                 break;
             default:
-                printf("\nInvalid choice (please enter 1-5)\n");
+                printf("\nInvalid choice (please enter between 1-6)\n");
         }
-    } while (choice != 5);
+    } while (choice != 6);
     return 0;
 }
