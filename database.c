@@ -4,13 +4,32 @@
 
 
 void addAppointment(void) {
-    FILE *file = fopen(FILENAME, "a");
-    if(file == NULL) {printf("File not Found!"); exit(1);}
+    Appointment a, temp;
+    int isDuplicate;
 
-    Appointment a;
-    
-    printf("Enter Appointment ID: ");
-    scanf(" %d",&a.appointment_id);
+    while (1) {
+        isDuplicate = 0;
+        printf("Enter Appointment ID: ");
+        scanf(" %d", &a.appointment_id);
+
+        FILE *file = fopen(FILENAME, "r");
+        if (file != NULL) {
+            while (fscanf(file, "%d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
+                &temp.appointment_id, temp.patient_name, &temp.patient_age, temp.doctor_name, temp.appointment_date, temp.status) == 6) {
+                
+                    if (temp.appointment_id == a.appointment_id) {
+                    isDuplicate = 1;
+                    break;
+                }
+            }
+            fclose(file);
+        }
+
+        if (!isDuplicate) {
+            break;
+        }
+        printf("ID already exists. Enter another ID.\n\n");
+    }
 
     printf("\nEnter Patient Name: ");
     scanf(" %49[^\n]", a.patient_name);
@@ -27,17 +46,15 @@ void addAppointment(void) {
     printf("\nEnter Patient status(Pending/Confirmed): ");
     scanf(" %14s", a.status);
 
+    FILE *file = fopen(FILENAME, "a");
+    if (file == NULL) {
+        printf("File not Found!");
+        exit(1);
+    }
+
     fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
-    
-    printf("\nAppointment added successfully!\n");
-    printf("\nAppointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n",
-    a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
-    
-    clearInputBuffer(); // Clear the input buffer after reading inputs
-    fprintf(file, "%d,%s,%d,%s,%s,%s\n", a.appointment_id, a.patient_name, a.patient_age, a.doctor_name, a.appointment_date, a.status);
-    printf("\nAppointment added successfully!\n");
+
     fclose(file);
-  
 }
 
 void searchAppointmentByID(void) {
@@ -84,8 +101,8 @@ void displayAllAppointments() {
     printf("\nAll Appointments\n");
     printf("\n=================================\n");
     
-    while (fscanf(file, "%d|%49[^,]|%d|%49[^,]|%11[^,]|%14[^\n]\n",&a.appointment_id, a.patient_name, &a.patient_age,
-                a.doctor_name, a.appointment_date, a.status) == 6) {
+   while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
+        &a.appointment_id, a.patient_name, &a.patient_age,a.doctor_name, a.appointment_date, a.status) == 6) {
         
         printf("ID: %d | Patient: %s (%d) | Doctor: %s | Date: %s | Status: %s\n",
                a.appointment_id, a.patient_name, a.patient_age,
