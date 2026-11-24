@@ -1,13 +1,13 @@
 #include<stdio.h>
 #include<string.h>
 #include "clinic.h"
-
+// Consume remaining characters up to newline to prevent scanf skipping
 void clearInputBuffer(void) {
     int c;
     while ((c = getchar()) != '\n' && c != EOF) {
     }
 }
-
+// Allow up to 3 attempts using strcmp to validate username and password
 int loginSystem(void){
     int attempts = 3;
     char username[50];

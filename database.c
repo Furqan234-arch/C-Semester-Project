@@ -4,9 +4,8 @@
 void addAppointment(void){
     Appointment a, temp;
     int isDuplicate;
-
-    // keep asking until we get an ID that isn't already in the file
-    while (1) {
+    //Scan existing file to ensure the new appointment ID is unique
+    while (1) {// keep asking until we get an ID that isn't already in the file
         isDuplicate = 0;
 
         printf("Enter Appointment ID: ");
@@ -46,7 +45,7 @@ void addAppointment(void){
     printf("\nEnter Patient status(Pending/Confirmed): ");
     scanf(" %14s", a.status);
 
-    // "a" mode adds the new record at the end without touching the old ones
+    // Open in append mode so new records are added at end without overwriting existing data.
     FILE *file = fopen(FILENAME, "a");
     if (file == NULL) {
         printf("File not Found!");
@@ -76,8 +75,8 @@ void searchAppointmentByID(void){
     scanf("%d", &id);
     clearInputBuffer();
     printf("\n");
-    // go through the file one record at a time and print the match
-    while (fscanf(file, "%d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
+    // Read records line by line until all 6 fields fail to parse.
+    while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
             &a.appointment_id,a.patient_name,&a.patient_age,a.doctor_name,a.appointment_date,a.status) == 6) {
 
         if (a.appointment_id == id) {
@@ -103,8 +102,8 @@ void displayAllAppointments(void){
         return;
     }
     printf("\nAll Appointments:\n");
-    // keeps going until a line doesn't give us all 6 fields
-    while (fscanf(file, "%d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]\n",
+// Read records line by line until all 6 fields fail to parse.
+    while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
             &a.appointment_id,a.patient_name,&a.patient_age,a.doctor_name,a.appointment_date,a.status) == 6) {
 
         printf("ID: %d | Patient: %s | Age: %d | Doctor: %s | Date: %s | Status: %s\n",

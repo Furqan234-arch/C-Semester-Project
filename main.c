@@ -3,14 +3,15 @@
 int main(void) {
     int choice = 0;
 
-    if(loginSystem()) {//login function call for admin (no input or output)
+    // Verify admin credentials before granting access to the menu
+    if(loginSystem()) {
         printf("Login failed!\n");
         return 1;
     }
 
-    //admin have to select from five choices
-    //I used dowhile loop so admin can make atlest one choice even if it invalid (display default msg)
-    //5 to exit the loop
+    //Admin has to select from six choices
+    //do while loop is used here so admin can make atlest one choice even if it invalid (display default message)
+    //6 to exit the loop
     do {
         printf("\n=================================\n");
         printf("     CLINIC APPOINTMENT SYSTEM");
@@ -24,10 +25,10 @@ int main(void) {
 
         printf("Enter your choice: ");
         scanf("%d",   &choice);
-
+    // Flush leftover newline character from input buffer
         clearInputBuffer();
         printf("\n");
-
+    // Route user selection to the corresponding appointment function
         switch (choice) {
             case 1:
                 addAppointment();
