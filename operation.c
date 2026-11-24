@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include "clinic.h"
-
+//Searches an appointment by ID and updates its fields via a temp file.
 void updateAppointment(void){
     FILE *file, *temp;
     Appointment a;
@@ -17,7 +17,7 @@ void updateAppointment(void){
     temp = fopen("Data//temp.txt", "w");
     if (temp == NULL) {
         printf("Unable to create temporary file.\n");
-        fclose(file);
+        fclose(file);// Close original file to prevent resource leak
         return;
     }
 
@@ -25,10 +25,11 @@ void updateAppointment(void){
     scanf("%d", &searchID);
     clearInputBuffer();
 
-    // the numbers in the format %49 etc prevent overflowing the arrays
+    /* CSV parsing is done to prevent %s to stop on space.
+    The numbers in the format %49 etc prevent overflowing the arrays*/
     while (fscanf(file, " %d,%49[^,],%d,%49[^,],%11[^,],%14[^\n]",
             &a.appointment_id,a.patient_name,&a.patient_age,a.doctor_name,a.appointment_date,a.status) == 6) {
-
+    // Match found: display old record and overwrite struct fields with new input
         if (a.appointment_id == searchID) {
             found = 1;
 
@@ -57,23 +58,25 @@ void updateAppointment(void){
             scanf(" %14s", a.status);
             clearInputBuffer();
 
-            // only show this for the record we actually changed
+            // Only show this for the record we actually changed
             printf("\nUpdated details:\n");
             printf("\nAppointment ID: %d\nPatient Name: %s\nPatient Age: %d\nDoctor Assigned: %s\nAppointment Date: %s\nStatus: %s\n ",
                 a.appointment_id, a.patient_name, a.patient_age,a.doctor_name, a.appointment_date, a.status);
         }
-        // copy every record over to the temp file, including the one we updated
+        // Write every record (updated or unchanged) into the temp file
         fprintf(temp, "%d,%s,%d,%s,%s,%s\n",
             a.appointment_id,a.patient_name,a.patient_age,a.doctor_name,a.appointment_date,a.status);
     }
+    // Close both files before deleting or renaming on Windows
     fclose(file);
     fclose(temp);
-    // no match = delete the temporary file and original stays intact
+    //If ID was not found, discard temp file and keep original intact
     if (!found) {
         remove("Data//temp.txt");
         printf("\nAppointment ID not found!\n");
         return;
     }
+    // Replace original file with the updated temporary file
     remove(FILENAME);
     if (rename("Data//temp.txt", FILENAME) != 0) {
         printf("\nError replacing original file.\n");
@@ -119,7 +122,7 @@ void deleteAppointment(void)
 
             // only ask about the record that matched, not every line in the file
             printf("\nAre you sure you want to delete this appointment? (y/n): ");
-            scanf(" %c", &choice);
+            scanf(" %c", &choice); //Confirm deletion with admin before modifying records
             clearInputBuffer();
             // 'y' = skip the write so the record disappears
             if (choice == 'y' || choice == 'Y') {
@@ -138,7 +141,7 @@ void deleteAppointment(void)
         printf("ID not found\n");
         return;
     }
-    // user said no, so the original file stays untouched
+    // If user cancelled deletion, remove temp file and abort
     if (!deleted) {
         remove("Data//temp.txt");
         printf("Deletion cancelled.\n");
